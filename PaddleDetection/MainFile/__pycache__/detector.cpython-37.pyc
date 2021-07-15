@@ -1,0 +1,29 @@
+B
+
+    荄阘0  ?               @   s  d dl mZ d dl mZ d dl mZ d dlZd dlZej?ejje	fdgd ?? ?Z
+e
+ejkrjej?e
+? d dlZe?d? d dlZd dlZd dlmZmZ d d	lmZ d d
+lmZmZmZ d dlmZ d dlmZ d d
+lmZ ed?Zdd? Z dd? Z!dd? Z"dS )?    )?absolute_import)?division)?print_functionNz..?   ?ignore)?load_config?merge_config)?Trainer)?check_gpu?check_version?check_config)?ArgsParser)?build_slim_model)?setup_logger?trainc          	   C   s  |dk	s| dk	st d??|dks:tj?|?s:t d?|???| dks\tj?| ?s\t d?| ???|rrtj?|?rr|gS t? }tj?| ?} tj?| ?s瀟 d?| ???dddd	g}|d
+d? |D ?7 }x$|D ]}|?t	?d?| |??? q耊 t
+|?}t|?d
+k?st d?| ???t?d?t|??? |S )z*
+    Get image path list in TEST mode
+    Nz(--infer_img or --infer_dir should be setz{} is not a filez{} is not a directoryzinfer_dir {} is not a directory?jpg?jpeg?png?bmpc             S   s   g | ]}|? ? ?qS ? )?upper)?.0?extr   r   鮇   D:\杞欢鏉彁浜MultiTargetTracking\PaddleDetection\MainFile\detector.py?<listcomp>.   s    z#get_test_images.<locals>.<listcomp>z{}/*.{}r   zno image found in {}z#Found {} inference images in total.)?AssertionError?os?path?isfile?format?isdir?set?abspath?update?glob?list?len?logger?info)?infer_dirZ	infer_img?images?extsr   r   r   r   ?get_test_images   s(    
+r,   c             C   sB   t |dd?}d}|?|? t| j|?}|j|| j| j| jd?}|S )N?test)?modezDD:/MultiTargetTracking/PaddleDetection/model/SA_final_model.pdparams)?draw_threshold?output_dir?save_txt)r	   ?load_weightsr,   r)   ?predictr/   r0   r1   )?FLAGS?cfg?img_path?trainer?wr*   ?bbox_resr   r   r   ?run9   s    
+
+r:   c             C   s~   | }t |j?}|j|d< |j|d< t|j? t?|jr:dnd?}|j	rVt
+||j	dd?}t|? t|j? t
+?  t|||?}|S )N?use_vdl?vdl_log_dir?gpu?cpur-   )r.   )r   ?configr;   r<   r   ?opt?paddle?set_device?use_gpuZslim_configr   r   r
+   r   r:   )?argsr6   r4   r5   ?placer9   r   r   r   ?detectL   s    
+
+
+
+
+rF   )#?__future__r   r   r   r   ?sysr   r"   ?join?__file__?parent_path?append?warnings?filterwarningsr$   rA   ?ppdet.core.workspacer   r   Zppdet.enginer	   Zppdet.utils.checkr
+   r   r   ?ppdet.utils.clir
+   Z
+ppdet.slimr   Zppdet.utils.loggerr   r'   r,   r:   rF   r   r   r   r   ?<module>   s(    
+
+
