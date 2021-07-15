@@ -1,0 +1,12 @@
+<RCC>
+  <qresource prefix="Image">
+    <file>person_tracking.png</file>
+    <file>social_distance.jpg</file>
+    <file>background.jpg</file>
+  </qresource>
+  <qresource prefix="icon">
+    <file>eye.png</file>
+    <file>input1.png</file>
+    <file>input2.png</file>
+  </qresource>
+</RCC>
