@@ -28,7 +28,7 @@
 
 ## 相关依赖包说明  
 
-[相关库的yaml文件](https://github.com/JunLei01/SoftWare/blob/main/environment.yaml)  *你在创建conda环境时可以快速安装项目所需包的 yaml文件*
+[相关库的yaml文件](https://github.com/JunLei01/SoftWare/blob/master/environment.yaml)  *你在创建conda环境时可以快速安装项目所需包的 yaml文件*
 
 [相关库的txt文件](https://github.com/JunLei01/SoftWare/blob/master/requirement.txt)  *你在创建conda环境时可以快速安装项目所需包的 txt文件*
 
